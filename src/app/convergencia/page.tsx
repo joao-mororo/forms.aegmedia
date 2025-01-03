@@ -19,7 +19,6 @@ const FormularioDuasEtapas = () => {
     telefone: "",
     faturamento: "",
     segmento: "",
-    cnpj: "",
     cargo: "",
     inicio_projeto: "",
     descricao: "",
@@ -85,12 +84,7 @@ const FormularioDuasEtapas = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Validate step 2
-    if (
-      !formData.cnpj ||
-      !formData.cargo ||
-      !formData.inicio_projeto ||
-      !formData.descricao
-    ) {
+    if (!formData.cargo || !formData.inicio_projeto || !formData.descricao) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
@@ -220,20 +214,28 @@ const FormularioDuasEtapas = () => {
               onChange={handleChange}
             >
               <option value="">Selecione</option>
-              <option value="Serviço">Serviço</option>
-              <option value="Varejo">Varejo</option>
-              <option value="Indústria">Indústria</option>
-              <option value="E-commerce">E-commerce</option>
-              <option value="Food Service">Food Service</option>
-              <option value="Educação">Educação</option>
-              <option value="Imobiliária">Imobiliária</option>
-              <option value="SAAS">SAAS</option>
-              <option value="Finanças">Finanças</option>
-              <option value="Franquia">Franquia</option>
-              <option value="Telecom">Telecom</option>
-              <option value="Energia Solar">Energia Solar</option>
-              <option value="Turismo">Turismo</option>
-              <option value="Outro">Outro</option>
+              {[
+                "Loja de veículos",
+                "Concessionária",
+                "Loja de baterias",
+                "Repasse automotivo",
+                "Rastreamento",
+                "Loja de autopeças",
+                "Loja de pneus",
+                "Proteção Veicular",
+                "Seguro de veículos",
+                "Equipadora de som",
+                "Acessórios automotivos",
+                "Estética automotiva",
+                "Locadora de veículos",
+                "Blindagem automotiva",
+                "Personalização e customização de veículos",
+                "Outro",
+              ].map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -258,18 +260,6 @@ const FormularioDuasEtapas = () => {
             informações para ser atendido com mais agilidade
           </p>
           <div className="mb-4">
-            <label className="block text-gray-700">CNPJ</label>
-            <input
-              type="text"
-              name="cnpj"
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-              value={formData.cnpj}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="mb-4">
             <label className="block text-gray-700">Cargo</label>
             <select
               name="cargo"
@@ -279,20 +269,22 @@ const FormularioDuasEtapas = () => {
               onChange={handleChange}
             >
               <option value="">Selecione</option>
-              <option value="Proprietário">Proprietário</option>
-              <option value="Sócio">Sócio</option>
-              <option value="CEO/Diretor Executivo">
-                CEO/Diretor Executivo
-              </option>
-              <option value="Diretor">Diretor</option>
-              <option value="Gerente">Gerente</option>
-              <option value="Supervisor">Supervisor</option>
-              <option value="Coordenador">Coordenador</option>
-              <option value="Analista">Analista</option>
-              <option value="Assistente/Funcionário">
-                Assistente/Funcionário
-              </option>
-              <option value="Outros">Outros</option>
+              {[
+                "Proprietário",
+                "Sócio",
+                "CEO/Diretor Executivo",
+                "Diretor",
+                "Gerente",
+                "Supervisor",
+                "Coordenador",
+                "Analista",
+                "Assistente/Funcionário",
+                "Outro",
+              ].map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
             </select>
           </div>
 
