@@ -108,7 +108,7 @@ const FormularioDuasEtapas = () => {
   };
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-transparent">
       {step === 1 && (
         <form
           id="formStep1"
