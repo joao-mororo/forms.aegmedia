@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 // import InputMask from "react-input-mask";
 import axios from "axios";
-import { redirect } from "@/lib/utils";
-import { useUTMParams } from "@/hooks/useUTMParams";
+import { getUTMParams, redirect } from "@/lib/utils";
+// import { useUTMParams } from "@/hooks/useUTMParams";
 
 const FormularioDuasEtapas = () => {
   const [step, setStep] = useState(1);
@@ -26,7 +26,7 @@ const FormularioDuasEtapas = () => {
   });
 
   useEffect(() => {
-    const UTMParams = useUTMParams();
+    const UTMParams = getUTMParams();
     setFormData((prevData) => ({
       ...prevData,
       ...UTMParams,
