@@ -112,7 +112,7 @@ const FormularioDuasEtapas = () => {
       {step === 1 && (
         <form
           id="formStep1"
-          className="py-[35px] px-[20px] border border-gray-300 flex flex-col gap-1 rounded-[10px] min-w-full"
+          className="py-[35px] px-[20px] border border-gray-300 flex flex-col gap-1 rounded-[10px] min-w-full bg-gray-100"
         >
           <input type="hidden" name="utm_source" value={formData.utm_source} />
           <input type="hidden" name="utm_medium" value={formData.utm_medium} />
@@ -251,7 +251,7 @@ const FormularioDuasEtapas = () => {
         <form
           id="formStep2"
           onSubmit={handleSubmit}
-          className="py-[35px] px-[20px] border border-gray-300 flex flex-col gap-1 rounded-[10px] min-w-full"
+          className="py-[35px] px-[20px] border border-gray-300 flex flex-col gap-1 rounded-[10px] min-w-full bg-gray-100"
         >
           <p>
             Recebemos o seu cadastro, agora é só terminar de preencher as
