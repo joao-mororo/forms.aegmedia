@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 // import InputMask from "react-input-mask";
 import axios from "axios";
+import { redirect } from "@/lib/utils";
 
 const FormularioDuasEtapas = () => {
   const [step, setStep] = useState(1);
@@ -71,10 +72,7 @@ const FormularioDuasEtapas = () => {
             formData.faturamento
           )
         ) {
-          if (typeof window !== "undefined") {
-            window.location.href =
-              "https://lp.aegmedia.com.br/conv-obrigadoref";
-          }
+          redirect("https://lp.aegmedia.com.br/conv-obrigadoref");
         } else {
           setStep(2);
         }
@@ -103,9 +101,7 @@ const FormularioDuasEtapas = () => {
         "https://hook.us1.make.com/iwiumcsjsh1mcydr7unb3jxsqctymk5o",
         { ...formData, etapa: "etapa 2" }
       );
-      if (typeof window !== "undefined") {
-        window.location.href = "https://lp.aegmedia.com.br/conv-obrigado";
-      }
+      redirect("https://lp.aegmedia.com.br/conv-obrigado");
     } catch (error) {
       alert("Ocorreu um erro ao enviar os dados. Tente novamente.");
     }
