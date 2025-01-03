@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 // import InputMask from "react-input-mask";
 import axios from "axios";
 import { redirect } from "@/lib/utils";
+import { useUTMParams } from "@/hooks/useUTMParams";
 
 const FormularioDuasEtapas = () => {
   const [step, setStep] = useState(1);
@@ -25,18 +26,11 @@ const FormularioDuasEtapas = () => {
   });
 
   useEffect(() => {
-    // Captura UTM da URL
-    if (typeof window !== "undefined") {
-      const urlParams = new URLSearchParams(window.location.search);
-      setFormData((prevData) => ({
-        ...prevData,
-        utm_source: urlParams.get("utm_source") || "",
-        utm_medium: urlParams.get("utm_medium") || "",
-        utm_campaign: urlParams.get("utm_campaign") || "",
-        utm_term: urlParams.get("utm_term") || "",
-        utm_content: urlParams.get("utm_content") || "",
-      }));
-    }
+    const UTMParams = useUTMParams();
+    setFormData((prevData) => ({
+      ...prevData,
+      ...UTMParams,
+    }));
   }, []);
 
   const handleChange = (e: any) => {
