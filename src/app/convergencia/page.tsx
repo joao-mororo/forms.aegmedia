@@ -96,11 +96,11 @@ const FormularioDuasEtapas = () => {
   };
 
   return (
-    <div className="bg-transparent">
+    <div className="bg-transparent border border-gray-300 rounded-xl">
       {step === 1 && (
         <form
           id="formStep1"
-          className="py-[35px] px-[20px] border border-gray-300 flex flex-col gap-1 rounded-[10px] min-w-full bg-gray-100"
+          className="py-[35px] px-[20px] flex flex-col gap-1 min-w-full"
         >
           <input type="hidden" name="utm_source" value={formData.utm_source} />
           <input type="hidden" name="utm_medium" value={formData.utm_medium} />
@@ -118,8 +118,9 @@ const FormularioDuasEtapas = () => {
           <input type="hidden" name="etapa" value="etapa 1" />
 
           <div className="mb-4">
-            <label className="block text-gray-700">Nome</label>
+            {/* <label className="block text-gray-700">Nome</label> */}
             <input
+              placeholder="Nome"
               type="text"
               name="nome"
               required
@@ -130,8 +131,9 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
+            {/* <label className="block text-gray-700">Email</label> */}
             <input
+              placeholder="Email"
               type="email"
               name="email"
               required
@@ -142,9 +144,10 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700">Nome da Empresa</label>
+            {/* <label className="block text-gray-700">Nome da Empresa</label> */}
             <input
               type="text"
+              placeholder="Nome da Empresa"
               name="nome_empresa"
               required
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
@@ -154,7 +157,7 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700">Telefone</label>
+            {/* <label className="block text-gray-700">Telefone</label> */}
             {/* <InputMask
               mask="(99) [9]9999-9999"
               value={formData.telefone}
@@ -165,6 +168,7 @@ const FormularioDuasEtapas = () => {
             /> */}
             <input
               type="tel"
+              placeholder="Telefone"
               value={formData.telefone}
               onChange={handleChange}
               name="telefone"
@@ -174,7 +178,7 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700">Faturamento Mensal</label>
+            {/* <label className="block text-gray-700">Faturamento Mensal</label> */}
             <select
               name="faturamento"
               required
@@ -182,7 +186,7 @@ const FormularioDuasEtapas = () => {
               value={formData.faturamento}
               onChange={handleChange}
             >
-              <option value="">Selecione</option>
+              <option value="">Faturamento Mensal</option>
               <option value="Até 50 mil">Até 50 mil</option>
               <option value="De 51 a 70 mil">De 51 mil a 70 mil</option>
               <option value="De 71 a 100 mil">De 71 mil a 100 mil</option>
@@ -199,7 +203,7 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700">Segmento</label>
+            {/* <label className="block text-gray-700">Segmento</label> */}
             <select
               name="segmento"
               required
@@ -207,7 +211,7 @@ const FormularioDuasEtapas = () => {
               value={formData.segmento}
               onChange={handleChange}
             >
-              <option value="">Selecione</option>
+              <option value="">Segmento</option>
               {[
                 "Loja de veículos",
                 "Concessionária",
@@ -247,14 +251,14 @@ const FormularioDuasEtapas = () => {
         <form
           id="formStep2"
           onSubmit={handleSubmit}
-          className="py-[35px] px-[20px] border border-gray-300 flex flex-col gap-1 rounded-[10px] min-w-full bg-gray-100"
+          className="py-[35px] px-[20px] flex flex-col gap-1 min-w-full"
         >
-          <p>
+          <p className="text-gray-300">
             Recebemos o seu cadastro, agora é só terminar de preencher as
             informações para ser atendido com mais agilidade
           </p>
           <div className="mb-4">
-            <label className="block text-gray-700">Cargo</label>
+            {/* <label className="block text-gray-700">Cargo</label> */}
             <select
               name="cargo"
               required
@@ -262,17 +266,13 @@ const FormularioDuasEtapas = () => {
               value={formData.cargo}
               onChange={handleChange}
             >
-              <option value="">Selecione</option>
+              <option value="">Cargo</option>
               {[
                 "Proprietário",
                 "Sócio",
-                "CEO/Diretor Executivo",
-                "Diretor",
                 "Gerente",
                 "Supervisor",
-                "Coordenador",
-                "Analista",
-                "Assistente/Funcionário",
+                "Vendedor",
                 "Outro",
               ].map((item) => (
                 <option key={item} value={item}>
@@ -283,9 +283,9 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Quando pretende iniciar o projeto
-            </label>
+            {/* <label className="block text-gray-700">
+              Quando pretende iniciar o projeto?
+            </label> */}
             <select
               name="inicio_projeto"
               required
@@ -293,7 +293,7 @@ const FormularioDuasEtapas = () => {
               value={formData.inicio_projeto}
               onChange={handleChange}
             >
-              <option value="">Selecione</option>
+              <option value="">Quando pretende iniciar o projeto?</option>
               <option value="Imediatamente">Imediatamente</option>
               <option value="Em até três meses">Em até três meses</option>
               <option value="Em seis meses">Em seis meses</option>
@@ -302,10 +302,12 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Fale um pouco mais sobre seu objeto e/ou negócio
-            </label>
+            {/* <label className="block text-gray-700">
+              Me fale um pouco sobre seus objetivos e principais
+              dificuldades em seu negócio
+            </label> */}
             <textarea
+              placeholder="Me fale um pouco sobre seus objetivos e principais dificuldades em seu negócio"
               name="descricao"
               required
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
