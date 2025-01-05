@@ -7,6 +7,7 @@ import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
 // import { useUTMParams } from "@/hooks/useUTMParams";
 
 const FormularioDuasEtapas = () => {
+  const [isSending, setIsSending] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     utm_source: "",
@@ -40,6 +41,7 @@ const FormularioDuasEtapas = () => {
 
   const handleNextStep = async (e: any) => {
     e.preventDefault();
+    setIsSending(true);
     if (step === 1) {
       // Validate step 1
       if (
@@ -51,12 +53,15 @@ const FormularioDuasEtapas = () => {
         !formData.segmento
       ) {
         alert("Por favor, preencha todos os campos obrigatórios.");
+        setIsSending(false);
         return;
       }
 
+      // Validate WhatsApp number
       const wppIsValid = await validateWhatsapp(formData.telefone);
       if (!wppIsValid) {
         alert("O número do WhatsApp informado é inválido.");
+        setIsSending(false);
         return;
       }
 
@@ -66,26 +71,31 @@ const FormularioDuasEtapas = () => {
           "https://hook.us1.make.com/iwiumcsjsh1mcydr7unb3jxsqctymk5o",
           { ...formData, etapa: "etapa 1" }
         );
-        if (
-          ["Até 50 mil", "De 51 a 70 mil", "De 71 a 100 mil"].includes(
-            formData.faturamento
-          )
-        ) {
-          redirect("https://lp.aegmedia.com.br/conv-obrigadoref");
-        } else {
-          setStep(2);
-        }
+        // if (
+        //   ["Até 50 mil", "De 51 a 70 mil", "De 71 a 100 mil"].includes(
+        //     formData.faturamento
+        //   )
+        // ) {
+        //   redirect("https://lp.aegmedia.com.br/conv-obrigadoref");
+        // } else {
+        //   setStep(2);
+        // }
+        setStep(2);
+        setIsSending(false);
       } catch (error) {
         alert("Ocorreu um erro ao enviar os dados. Tente novamente.");
+        setIsSending(false);
       }
     }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setIsSending(true);
     // Validate step 2
     if (!formData.cargo || !formData.inicio_projeto) {
       alert("Por favor, preencha todos os campos obrigatórios.");
+      setIsSending(false);
       return;
     }
 
@@ -100,8 +110,10 @@ const FormularioDuasEtapas = () => {
       } else {
         redirect("https://lp.aegmedia.com.br/conv-obrigadoref");
       }
+      setIsSending(false);
     } catch (error) {
       alert("Ocorreu um erro ao enviar os dados. Tente novamente.");
+      setIsSending(false);
     }
   };
 
@@ -250,7 +262,8 @@ const FormularioDuasEtapas = () => {
 
           <button
             type="submit"
-            className="mt-4 bg-green-600 text-white p-3 rounded w-full"
+            className="mt-4 bg-green-600 text-white p-3 rounded w-full disabled:opacity-80"
+            disabled={isSending}
           >
             Enviar agora mesmo
           </button>
@@ -327,7 +340,8 @@ const FormularioDuasEtapas = () => {
 
           <button
             type="submit"
-            className="mt-4 bg-green-600 text-white p-3 rounded w-full"
+            className="mt-4 bg-green-600 text-white p-3 rounded w-full disabled:opacity-80"
+            disabled={isSending}
           >
             Enviar agora mesmo
           </button>
