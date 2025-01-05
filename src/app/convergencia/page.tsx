@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 // import InputMask from "react-input-mask";
 import axios from "axios";
-import { getUTMParams, redirect } from "@/lib/utils";
+import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
 // import { useUTMParams } from "@/hooks/useUTMParams";
 
 const FormularioDuasEtapas = () => {
@@ -54,6 +54,12 @@ const FormularioDuasEtapas = () => {
         return;
       }
 
+      const wppIsValid = await validateWhatsapp(formData.telefone);
+      if (!wppIsValid) {
+        alert("O número do WhatsApp informado é inválido.");
+        return;
+      }
+
       // Send step 1 data
       try {
         await axios.post(
@@ -78,7 +84,7 @@ const FormularioDuasEtapas = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Validate step 2
-    if (!formData.cargo || !formData.inicio_projeto || !formData.descricao) {
+    if (!formData.cargo || !formData.inicio_projeto) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
@@ -89,7 +95,11 @@ const FormularioDuasEtapas = () => {
         "https://hook.us1.make.com/iwiumcsjsh1mcydr7unb3jxsqctymk5o",
         { ...formData, etapa: "etapa 2" }
       );
-      redirect("https://lp.aegmedia.com.br/conv-obrigado");
+      if (formData.cargo === "Proprietário") {
+        redirect("https://lp.aegmedia.com.br/conv-obrigado");
+      } else {
+        redirect("https://lp.aegmedia.com.br/conv-obrigadoref");
+      }
     } catch (error) {
       alert("Ocorreu um erro ao enviar os dados. Tente novamente.");
     }
@@ -100,6 +110,7 @@ const FormularioDuasEtapas = () => {
       {step === 1 && (
         <form
           id="formStep1"
+          onSubmit={handleNextStep}
           className="py-[35px] px-[20px] flex flex-col gap-1 min-w-full"
         >
           <input type="hidden" name="utm_source" value={formData.utm_source} />
@@ -168,7 +179,7 @@ const FormularioDuasEtapas = () => {
             /> */}
             <input
               type="tel"
-              placeholder="Telefone"
+              placeholder="DDD + Telefone"
               value={formData.telefone}
               onChange={handleChange}
               name="telefone"
@@ -238,8 +249,7 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <button
-            type="button"
-            onClick={handleNextStep}
+            type="submit"
             className="mt-4 bg-green-600 text-white p-3 rounded w-full"
           >
             Enviar agora mesmo
@@ -309,7 +319,6 @@ const FormularioDuasEtapas = () => {
             <textarea
               placeholder="Me fale um pouco sobre seus objetivos e principais dificuldades em seu negócio"
               name="descricao"
-              required
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               value={formData.descricao}
               onChange={handleChange}
@@ -317,8 +326,7 @@ const FormularioDuasEtapas = () => {
           </div>
 
           <button
-            type="button"
-            onClick={handleSubmit}
+            type="submit"
             className="mt-4 bg-green-600 text-white p-3 rounded w-full"
           >
             Enviar agora mesmo
