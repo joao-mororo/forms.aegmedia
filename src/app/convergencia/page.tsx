@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 // import InputMask from "react-input-mask";
 import axios from "axios";
 import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
+import { DEFAULT_AUTHORITIES, DEFAULT_SEGMENTS } from "@/lib/constants";
 // import { useUTMParams } from "@/hooks/useUTMParams";
 
 const FormularioDuasEtapas = () => {
@@ -235,24 +236,7 @@ const FormularioDuasEtapas = () => {
               onChange={handleChange}
             >
               <option value="">Segmento</option>
-              {[
-                "Loja de veículos",
-                "Concessionária",
-                "Loja de baterias",
-                "Repasse automotivo",
-                "Rastreamento",
-                "Loja de autopeças",
-                "Loja de pneus",
-                "Proteção Veicular",
-                "Seguro de veículos",
-                "Equipadora de som",
-                "Acessórios automotivos",
-                "Estética automotiva",
-                "Locadora de veículos",
-                "Blindagem automotiva",
-                "Personalização e customização de veículos",
-                "Outro",
-              ].map((item) => (
+              {DEFAULT_SEGMENTS.map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
@@ -290,14 +274,7 @@ const FormularioDuasEtapas = () => {
               onChange={handleChange}
             >
               <option value="">Cargo</option>
-              {[
-                "Proprietário",
-                "Sócio",
-                "Gerente",
-                "Supervisor",
-                "Vendedor",
-                "Outro",
-              ].map((item) => (
+              {DEFAULT_AUTHORITIES.map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
