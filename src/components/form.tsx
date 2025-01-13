@@ -17,12 +17,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { getUTMParams } from "@/lib/utils";
+import { getUTMParams, redirect } from "@/lib/utils";
+import axios from "axios";
+import { PhoneInput } from "./phone-input";
 
 const Form = () => {
   const [step, setStep] = useState(1);
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step > 1 ? step - 1 : step);
+  const [isSending, setIsSending] = useState(false);
+  const webhook = "https://webhook.site/9a0809b4-95c8-4c43-a973-a6021f27340c";
   const [data, setData] = useState({
     utm_source: "",
     utm_medium: "",
@@ -32,14 +36,38 @@ const Form = () => {
     name: "",
     email: "",
     phone: "",
+    businessName: "",
     authority: "",
     segment: "",
     budget: "",
-    // Other fields...
   });
+
   const handleChange = (e: any) => {
     const { name, value } = e.target || e;
     setData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (step < 7) {
+      nextStep();
+    } else {
+      setIsSending(true);
+      axios
+        .post(webhook, data)
+        .then((res) => {
+          setIsSending(false);
+          redirect(
+            data.authority === "Proprietário"
+              ? "https://lp.aegmedia.com.br/conv-obrigado"
+              : "https://lp.aegmedia.com.br/conv-obrigadoref"
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+          setIsSending(false);
+        });
+    }
   };
 
   useEffect(() => {
@@ -51,10 +79,12 @@ const Form = () => {
   }, []);
 
   return (
-    <form className="mt-2 mb-10">
+    <form className="mt-2 mb-10" onSubmit={handleSubmit}>
       {step === 1 && (
         <div className="flex flex-col gap-8">
-          <Label className="text-2xl font-bold">Como devemos te chamar?</Label>
+          <Label className="text-xl sm:text-3xl font-bold">
+            Como devemos te chamar?
+          </Label>
           <Input
             className="text-lg"
             type="text"
@@ -69,10 +99,10 @@ const Form = () => {
 
       {step === 2 && (
         <div className="flex flex-col gap-8">
-          <Label className="text-2xl font-bold">
-            Qual seu número de WhatsApp?
+          <Label className="text-xl sm:text-3xl font-bold">
+            Qual seu número de WhatsApp, {data.name}?
           </Label>
-          <Input
+          {/* <Input
             className="text-lg"
             type="tel"
             name="phone"
@@ -80,13 +110,25 @@ const Form = () => {
             required
             onChange={handleChange}
             value={data.phone}
+          /> */}
+          <PhoneInput
+            className="text-lg"
+            type="tel"
+            name="phone"
+            placeholder="Digite o DDD + Telefone"
+            required
+            onChange={(e) => handleChange({ name: "phone", value: e })}
+            value={data.phone}
+            defaultCountry="BR"
           />
         </div>
       )}
 
       {step === 3 && (
         <div className="flex flex-col gap-8">
-          <Label className="text-2xl font-bold">Qual seu melhor e-mail?</Label>
+          <Label className="text-xl sm:text-3xl font-bold">
+            Qual seu melhor e-mail?
+          </Label>
           <Input
             className="text-lg"
             type="email"
@@ -101,7 +143,26 @@ const Form = () => {
 
       {step === 4 && (
         <div className="flex flex-col gap-8">
-          <Label className="text-2xl font-bold">Qual o seu cargo?</Label>
+          <Label className="text-xl sm:text-3xl font-bold">
+            Qual o nome do seu negócio?
+          </Label>
+          <Input
+            className="text-lg"
+            type="text"
+            name="businessName"
+            placeholder="Digite o nome da sua empresa ou associação"
+            required
+            onChange={handleChange}
+            value={data.businessName}
+          />
+        </div>
+      )}
+
+      {step === 5 && (
+        <div className="flex flex-col gap-8">
+          <Label className="text-xl sm:text-3xl font-bold">
+            Qual o seu cargo?
+          </Label>
           <Select
             required
             onValueChange={(value) =>
@@ -122,9 +183,9 @@ const Form = () => {
         </div>
       )}
 
-      {step === 5 && (
+      {step === 6 && (
         <div className="flex flex-col gap-8">
-          <Label className="text-2xl font-bold">
+          <Label className="text-xl sm:text-3xl font-bold">
             Qual o segmento do seu negócio?
           </Label>
           <Select
@@ -145,9 +206,9 @@ const Form = () => {
         </div>
       )}
 
-      {step === 6 && (
+      {step === 7 && (
         <div className="flex flex-col gap-8">
-          <Label className="text-2xl font-bold">
+          <Label className="text-xl sm:text-3xl font-bold">
             Qual o faturamento mensal do seu negócio?
           </Label>
           <Select
@@ -178,11 +239,16 @@ const Form = () => {
           </p>
         )}
         <Button
-          type="button"
-          onClick={nextStep}
+          disabled={isSending}
           className="bg-cyan-500 hover:bg-cyan-800 font-bold text-base"
         >
-          PROSSEGUIR <StepForward />
+          {isSending ? (
+            "ENVIANDO..."
+          ) : (
+            <>
+              PROSSEGUIR <StepForward />
+            </>
+          )}
         </Button>
       </div>
     </form>

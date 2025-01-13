@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 // import InputMask from "react-input-mask";
 import axios from "axios";
 import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
-// import { useUTMParams } from "@/hooks/useUTMParams";
+import { PhoneInput } from "@/components/phone-input";
 
 const FormularioDuasEtapas = () => {
   const [isSending, setIsSending] = useState(false);
@@ -57,12 +57,12 @@ const FormularioDuasEtapas = () => {
       }
 
       // Validate WhatsApp number
-      const wppIsValid = await validateWhatsapp(formData.telefone);
-      if (!wppIsValid) {
-        alert("O número do WhatsApp informado é inválido.");
-        setIsSending(false);
-        return;
-      }
+      // const wppIsValid = await validateWhatsapp(formData.telefone);
+      // if (!wppIsValid) {
+      //   alert("O número do WhatsApp informado é inválido.");
+      //   setIsSending(false);
+      //   return;
+      // }
 
       // Send step 1 data
       try {
@@ -174,15 +174,7 @@ const FormularioDuasEtapas = () => {
 
           <div className="mb-4">
             {/* <label className="block text-gray-700">Telefone</label> */}
-            {/* <InputMask
-              mask="(99) [9]9999-9999"
-              value={formData.telefone}
-              onChange={handleChange}
-              name="telefone"
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            /> */}
-            <input
+            {/* <input
               type="tel"
               placeholder="DDD + Telefone"
               value={formData.telefone}
@@ -190,6 +182,16 @@ const FormularioDuasEtapas = () => {
               name="telefone"
               required
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+            /> */}
+            <PhoneInput
+              className="mt-1 flex w-full border border-gray-300 rounded-md p-2"
+              type="tel"
+              name="telefone"
+              placeholder="Digite o DDD + Telefone"
+              required
+              onChange={(e) => handleChange({ name: "telefone", value: e })}
+              value={formData.telefone}
+              defaultCountry="BR"
             />
           </div>
 
