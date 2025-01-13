@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import InputMask from "react-input-mask";
 import axios from "axios";
 import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
-import { PhoneInput } from "@/components/phone-input";
+// import { PhoneInput } from "@/components/phone-input";
 
 const FormularioDuasEtapas = () => {
   const [isSending, setIsSending] = useState(false);

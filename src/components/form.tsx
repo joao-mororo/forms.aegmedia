@@ -19,7 +19,7 @@ import {
 } from "./ui/select";
 import { getUTMParams, redirect } from "@/lib/utils";
 import axios from "axios";
-import { PhoneInput } from "./phone-input";
+// import { PhoneInput } from "./phone-input";
 
 const Form = () => {
   const [step, setStep] = useState(1);
