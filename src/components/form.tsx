@@ -102,7 +102,7 @@ const Form = () => {
           <Label className="text-xl sm:text-3xl font-bold">
             Qual seu número de WhatsApp, {data.name}?
           </Label>
-          {/* <Input
+          <Input
             className="text-lg"
             type="tel"
             name="phone"
@@ -110,8 +110,8 @@ const Form = () => {
             required
             onChange={handleChange}
             value={data.phone}
-          /> */}
-          <PhoneInput
+          />
+          {/* <PhoneInput
             className="text-lg"
             type="tel"
             name="phone"
@@ -120,7 +120,7 @@ const Form = () => {
             onChange={(e) => handleChange({ name: "phone", value: e })}
             value={data.phone}
             defaultCountry="BR"
-          />
+          /> */}
         </div>
       )}
 

@@ -174,7 +174,7 @@ const FormularioDuasEtapas = () => {
 
           <div className="mb-4">
             {/* <label className="block text-gray-700">Telefone</label> */}
-            {/* <input
+            <input
               type="tel"
               placeholder="DDD + Telefone"
               value={formData.telefone}
@@ -182,8 +182,8 @@ const FormularioDuasEtapas = () => {
               name="telefone"
               required
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            /> */}
-            <PhoneInput
+            />
+            {/* <PhoneInput
               className="mt-1 flex w-full border border-gray-300 rounded-md p-2"
               type="tel"
               name="telefone"
@@ -192,7 +192,7 @@ const FormularioDuasEtapas = () => {
               onChange={(e) => handleChange({ name: "telefone", value: e })}
               value={formData.telefone}
               defaultCountry="BR"
-            />
+            /> */}
           </div>
 
           <div className="mb-4">
