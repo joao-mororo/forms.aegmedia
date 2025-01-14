@@ -26,7 +26,7 @@ const Form = () => {
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step > 1 ? step - 1 : step);
   const [isSending, setIsSending] = useState(false);
-  const webhook = "https://webhook.site/9a0809b4-95c8-4c43-a973-a6021f27340c";
+  const webhook = "https://hook.us1.make.com/2t1mjuhb8hc58b4456o2o2a8k3pzqxbb";
   const [data, setData] = useState({
     utm_source: "",
     utm_medium: "",
@@ -65,6 +65,7 @@ const Form = () => {
         })
         .catch((err) => {
           console.error(err);
+          alert("Erro ao enviar dados");
           setIsSending(false);
         });
     }
