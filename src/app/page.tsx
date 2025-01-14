@@ -5,7 +5,7 @@ import Form from "@/components/form";
 export default function Home() {
   return (
     <main className="w-full h-screen grid grid-cols-7">
-      <div className="hidden sm:flex flex-col justify-center bg-black text-white col-span-3 rounded-tr-xl rounded-br-xl p-16 gap-6">
+      <div className="hidden sm:flex flex-col justify-center bg-black bg-[url('/bg-image.png')] bg-top bg-cover text-white col-span-3 rounded-tr-xl rounded-br-xl p-16 gap-6">
         <h1 className="text-6xl font-bold text-cyan-500">
           Não seja só mais um no mercado
         </h1>
