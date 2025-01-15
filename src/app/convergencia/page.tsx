@@ -60,7 +60,7 @@ const FormularioDuasEtapas = () => {
     }, 5000);
 
     return () => clearInterval(interval); // Limpa o intervalo quando o componente desmontar
-  }, []);
+  }, [formData, leadID]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
