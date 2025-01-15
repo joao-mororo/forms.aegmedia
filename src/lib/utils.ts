@@ -86,3 +86,43 @@ export async function validateWhatsapp(
     return false; // Handle errors gracefully and return a default value
   }
 }
+
+export async function getUserIP() {
+  try {
+    // Usando o serviço de API pública ipify para obter o IP
+    const response = await fetch("https://api.ipify.org?format=json");
+    if (!response.ok) {
+      throw new Error("Erro ao obter o IP");
+    }
+    const data = await response.json();
+    return data.ip; // Retorna o IP
+  } catch (error) {
+    console.error("Erro ao obter o IP", error);
+    return null; // Retorna null em caso de erro
+  }
+}
+
+export function deepEqual(obj1: any, obj2: any) {
+  if (obj1 === obj2) return true; // Mesma referência
+  if (
+    typeof obj1 !== "object" ||
+    obj1 === null ||
+    typeof obj2 !== "object" ||
+    obj2 === null
+  ) {
+    return false; // Não são objetos ou são null
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false; // Número de propriedades diferente
+
+  for (let key of keys1) {
+    if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+      return false; // Propriedade não existe ou valores não são iguais
+    }
+  }
+
+  return true;
+}

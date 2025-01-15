@@ -1,15 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
+import {
+  getUserIP,
+  getUTMParams,
+  redirect,
+  validateWhatsapp,
+} from "@/lib/utils";
 import { DEFAULT_AUTHORITIES, DEFAULT_SEGMENTS } from "@/lib/constants";
 // import { PhoneInput } from "@/components/phone-input";
 
 const FormularioDuasEtapas = () => {
   const [isSending, setIsSending] = useState(false);
   const [step, setStep] = useState(1);
-  const [leadID] = useState(crypto.randomUUID().toString());
+  const [leadID, setLeadID] = useState("");
+  const [savedData, setSavedData] = useState<any>();
   const [formData, setFormData] = useState({
     utm_source: "",
     utm_medium: "",
@@ -35,17 +41,37 @@ const FormularioDuasEtapas = () => {
     }));
   }, []);
 
+  useEffect(() => {
+    getUserIP()
+      .then((ip) => setLeadID(ip.toString()))
+      .catch((err) => setLeadID(crypto.randomUUID().toString()));
+  }, []);
+
   // Salvamento automático
   useEffect(() => {
     const interval = setInterval(() => {
-      axios.post("https://hook.us1.make.com/i46jfxwbtl6f38micf98jgc2rdh32sd3", {
+      let newData = {
         ...formData,
         id: leadID,
-      });
-    }, 5000); // Salva a cada 5 segundos
+      };
 
-    return () => clearInterval(interval);
-  }, [formData]);
+      setSavedData((prevSavedData: any) => {
+        if (!prevSavedData) {
+          return newData;
+        }
+        if (JSON.stringify(prevSavedData) !== JSON.stringify(newData)) {
+          axios.post(
+            "https://hook.us1.make.com/i46jfxwbtl6f38micf98jgc2rdh32sd3",
+            newData
+          );
+          return newData; // Atualize o estado
+        }
+        return prevSavedData; // Não atualize se for igual
+      });
+    }, 5000);
+
+    return () => clearInterval(interval); // Limpa o intervalo quando o componente desmontar
+  }, [formData, leadID]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
