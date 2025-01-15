@@ -2,18 +2,13 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  getUserIP,
-  getUTMParams,
-  redirect,
-  validateWhatsapp,
-} from "@/lib/utils";
+import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
 // import { PhoneInput } from "@/components/phone-input";
 
 const FormularioDuasEtapas = () => {
   const [isSending, setIsSending] = useState(false);
   const [step, setStep] = useState(1);
-  const [leadID, setLeadID] = useState("");
+  const [leadID] = useState(crypto.randomUUID().toString());
   const [savedData, setSavedData] = useState<any>();
   const [formData, setFormData] = useState({
     utm_source: "",
@@ -38,12 +33,6 @@ const FormularioDuasEtapas = () => {
       ...prevData,
       ...UTMParams,
     }));
-  }, []);
-
-  useEffect(() => {
-    getUserIP()
-      .then((ip) => setLeadID(ip.toString()))
-      .catch((err) => setLeadID(crypto.randomUUID().toString()));
   }, []);
 
   // Salvamento automático
