@@ -9,6 +9,7 @@ import { DEFAULT_AUTHORITIES, DEFAULT_SEGMENTS } from "@/lib/constants";
 const FormularioDuasEtapas = () => {
   const [isSending, setIsSending] = useState(false);
   const [step, setStep] = useState(1);
+  const [leadID] = useState(crypto.randomUUID().toString());
   const [formData, setFormData] = useState({
     utm_source: "",
     utm_medium: "",
@@ -33,6 +34,18 @@ const FormularioDuasEtapas = () => {
       ...UTMParams,
     }));
   }, []);
+
+  // Salvamento automático
+  useEffect(() => {
+    const interval = setInterval(() => {
+      axios.post("https://hook.us1.make.com/i46jfxwbtl6f38micf98jgc2rdh32sd3", {
+        ...formData,
+        id: leadID,
+      });
+    }, 5000); // Salva a cada 5 segundos
+
+    return () => clearInterval(interval);
+  }, [formData]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
