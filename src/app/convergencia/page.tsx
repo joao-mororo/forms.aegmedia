@@ -57,7 +57,7 @@ const FormularioDuasEtapas = () => {
         }
         return prevSavedData; // Não atualize se for igual
       });
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval); // Limpa o intervalo quando o componente desmontar
   }, [formData, leadID]);
