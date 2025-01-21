@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getUTMParams, redirect, validateWhatsapp } from "@/lib/utils";
 import { DEFAULT_AUTHORITIES, DEFAULT_SEGMENTS } from "@/lib/constants";
+import PhoneInput from "@/components/phone-input";
 // import { PhoneInput } from "@/components/phone-input";
 
 const FormularioDuasEtapas = () => {
@@ -209,7 +210,17 @@ const FormularioDuasEtapas = () => {
 
           <div className="mb-4">
             {/* <label className="block text-gray-700">Telefone</label> */}
-            <input
+            {/* <input
+              type="tel"
+              placeholder="DDD + Telefone"
+              value={formData.telefone}
+              onChange={handleChange}
+              name="telefone"
+              required
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+            /> */}
+            <PhoneInput
+              mask="(99) 99999-9999"
               type="tel"
               placeholder="DDD + Telefone"
               value={formData.telefone}
@@ -218,16 +229,6 @@ const FormularioDuasEtapas = () => {
               required
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
             />
-            {/* <PhoneInput
-              className="mt-1 flex w-full border border-gray-300 rounded-md p-2"
-              type="tel"
-              name="telefone"
-              placeholder="Digite o DDD + Telefone"
-              required
-              onChange={(e) => handleChange({ name: "telefone", value: e })}
-              value={formData.telefone}
-              defaultCountry="BR"
-            /> */}
           </div>
 
           <div className="mb-4">

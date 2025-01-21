@@ -2,6 +2,9 @@ import Image from "next/image";
 import { Quote } from "lucide-react";
 import Form from "@/components/form";
 
+// Talvez eu traga flores da próxima vez;
+// Ou, com alguma esperança, eu não venha;
+
 export default function Home() {
   return (
     <main className="w-full h-screen grid grid-cols-7">

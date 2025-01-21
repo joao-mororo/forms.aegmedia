@@ -19,10 +19,10 @@ import {
 } from "./ui/select";
 import { getUTMParams, redirect } from "@/lib/utils";
 import axios from "axios";
-// import { PhoneInput } from "./phone-input";
+import PhoneInput from "./phone-input";
 
 const Form = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step > 1 ? step - 1 : step);
   const [isSending, setIsSending] = useState(false);
@@ -103,7 +103,7 @@ const Form = () => {
           <Label className="text-xl sm:text-3xl font-bold">
             Qual seu número de WhatsApp, {data.name}?
           </Label>
-          <Input
+          {/* <Input
             className="text-lg"
             type="tel"
             name="phone"
@@ -111,17 +111,18 @@ const Form = () => {
             required
             onChange={handleChange}
             value={data.phone}
-          />
-          {/* <PhoneInput
+          /> */}
+          <PhoneInput
+            mask="(99) 99999-9999"
             className="text-lg"
             type="tel"
             name="phone"
             placeholder="Digite o DDD + Telefone"
             required
-            onChange={(e) => handleChange({ name: "phone", value: e })}
+            // onChange={(e: any) => handleChange({ name: "phone", value: e })}
+            onChange={(e: any) => handleChange(e)}
             value={data.phone}
-            defaultCountry="BR"
-          /> */}
+          />
         </div>
       )}
 
