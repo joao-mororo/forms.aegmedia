@@ -233,11 +233,12 @@ const FormularioDuasEtapas = () => {
             >
               <option value="">Quantos veículos você vende por mês?</option>
               {[
-                "Menos de 10 carros por mês",
-                "10 a 29 carros por mês",
-                "30 a 50 carros por mês",
-                "51 a 100 carros por mês",
-                "Acima de 100 carros por mês",
+                "1 a 5 carros por mês",
+                "6 a 10 carros por mês",
+                "11 a 20 carros por mês",
+                "21 a 30 carros por mês",
+                "31 a 50 carros por mês",
+                "Acima de 50 carros por mês",
               ].map((item) => (
                 <option key={item} value={item}>
                   {item}

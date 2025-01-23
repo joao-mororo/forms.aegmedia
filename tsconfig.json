@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/utils/db.js"
+    "src/components/phone-input.jsx",
+    "src/components/phone-input.jsx"
   ],
   "exclude": ["node_modules"]
 }
