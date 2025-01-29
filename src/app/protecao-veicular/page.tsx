@@ -25,7 +25,7 @@ const FormularioDuasEtapas = () => {
     inicio_projeto: "",
     descricao: "",
   });
-  const webhook = "https://hook.us1.make.com/2cc1ahmp86oceu8pbudy9llg83vdsa48";
+  const webhook = "";
 
   useEffect(() => {
     const UTMParams = getUTMParams();
@@ -94,6 +94,15 @@ const FormularioDuasEtapas = () => {
       // Send step 1 data
       try {
         await axios.post(webhook, { ...formData, etapa: "etapa 1" });
+        // if (
+        //   ["Até 50 mil", "De 51 a 70 mil", "De 71 a 100 mil"].includes(
+        //     formData.faturamento
+        //   )
+        // ) {
+        //   redirect("https://lp.aegmedia.com.br/auto-obrigadoref");
+        // } else {
+        //   setStep(2);
+        // }
         setStep(2);
         setIsSending(false);
       } catch (error) {
@@ -106,14 +115,20 @@ const FormularioDuasEtapas = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSending(true);
+    // Validate step 2
+    if (!formData.cargo || !formData.inicio_projeto) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      setIsSending(false);
+      return;
+    }
 
     // Send combined data
     try {
       await axios.post(webhook, { ...formData, etapa: "etapa 2" });
-      if (formData.cargo === "Dono") {
-        redirect("https://lp.aegmedia.com.br/rastreamento-obrigado");
+      if (formData.cargo === "Presidente") {
+        redirect("https://lp.aegmedia.com.br/auto-obrigado");
       } else {
-        redirect("https://lp.aegmedia.com.br/rastreamento-obrigadoref");
+        redirect("https://lp.aegmedia.com.br/auto-obrigadoref");
       }
       setIsSending(false);
     } catch (error) {
@@ -217,7 +232,13 @@ const FormularioDuasEtapas = () => {
               onChange={handleChange}
             >
               <option value="">Cargo</option>
-              {["Dono", "Gerente", "Vendedor", "Outro"].map((item) => (
+              {[
+                "Presidente",
+                "Diretor",
+                "Gerente comercial",
+                "Consultor",
+                "Outro",
+              ].map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
@@ -225,31 +246,32 @@ const FormularioDuasEtapas = () => {
             </select>
           </div>
 
-          {!["", "Vendedor"].includes(formData.cargo) && (
-            <div className="mb-4">
-              {/* <label className="block text-gray-700">Faturamento Mensal</label> */}
-              <select
-                name="faturamento"
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                value={formData.faturamento}
-                onChange={handleChange}
-              >
-                <option value="">Qual o tamanho da sua base hoje?</option>
-                {[
-                  "101 a 500 rastreios",
-                  "501 a 1000 rastreios",
-                  "1001 a 2000 rastreios",
-                  "2001 a 5000 rastreios",
-                  "Acima de 5000 rastreios",
-                ].map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+          <div className="mb-4">
+            {/* <label className="block text-gray-700">Faturamento Mensal</label> */}
+            <select
+              name="faturamento"
+              required
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              value={formData.faturamento}
+              onChange={handleChange}
+            >
+              <option value="">
+                Quantas placas estão ativas sua base hoje?
+              </option>
+              {[
+                "0 placas",
+                "1 a 200 placas",
+                "201 a 500 placas",
+                "501 a 1000 placas",
+                "1001 a 5000 placas",
+                "Acima de 5000 placas",
+              ].map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <button
             type="submit"
