@@ -70,19 +70,6 @@ const FormularioDuasEtapas = () => {
     e.preventDefault();
     setIsSending(true);
     if (step === 1) {
-      // Validate step 1
-      if (
-        !formData.nome ||
-        !formData.email ||
-        !formData.nome_empresa ||
-        !formData.telefone ||
-        !formData.faturamento
-      ) {
-        alert("Por favor, preencha todos os campos obrigatórios.");
-        setIsSending(false);
-        return;
-      }
-
       // Validate WhatsApp number
       // const wppIsValid = await validateWhatsapp(formData.telefone);
       // if (!wppIsValid) {
