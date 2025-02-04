@@ -69,24 +69,22 @@ const FormularioDuasEtapas = () => {
   const handleNextStep = async (e: any) => {
     e.preventDefault();
     setIsSending(true);
-    if (step === 1) {
-      // Validate WhatsApp number
-      // const wppIsValid = await validateWhatsapp(formData.telefone);
-      // if (!wppIsValid) {
-      //   alert("O número do WhatsApp informado é inválido.");
-      //   setIsSending(false);
-      //   return;
-      // }
+    // Validate WhatsApp number
+    // const wppIsValid = await validateWhatsapp(formData.telefone);
+    // if (!wppIsValid) {
+    //   alert("O número do WhatsApp informado é inválido.");
+    //   setIsSending(false);
+    //   return;
+    // }
 
-      // Send step 1 data
-      try {
-        await axios.post(webhook, { ...formData, etapa: "etapa 1" });
-        setStep(2);
-        setIsSending(false);
-      } catch (error) {
-        alert("Ocorreu um erro ao enviar os dados. Tente novamente.");
-        setIsSending(false);
-      }
+    // Send step 1 data
+    try {
+      await axios.post(webhook, { ...formData, etapa: "etapa 1" });
+      setStep(2);
+      setIsSending(false);
+    } catch (error) {
+      alert("Ocorreu um erro ao enviar os dados. Tente novamente.");
+      setIsSending(false);
     }
   };
 

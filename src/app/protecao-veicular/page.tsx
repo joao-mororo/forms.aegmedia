@@ -25,7 +25,7 @@ const FormularioDuasEtapas = () => {
     inicio_projeto: "",
     descricao: "",
   });
-  const webhook = "";
+  const webhook = "https://hook.us1.make.com/y7xm0cwriqnyrfd35w3uemmv5p4cw3vl";
 
   useEffect(() => {
     const UTMParams = getUTMParams();
@@ -126,9 +126,9 @@ const FormularioDuasEtapas = () => {
     try {
       await axios.post(webhook, { ...formData, etapa: "etapa 2" });
       if (formData.cargo === "Presidente") {
-        redirect("https://lp.aegmedia.com.br/auto-obrigado");
+        redirect("https://lp.aegmedia.com.br/protecao-obrigado");
       } else {
-        redirect("https://lp.aegmedia.com.br/auto-obrigadoref");
+        redirect("https://lp.aegmedia.com.br/protecao-obrigadoref");
       }
       setIsSending(false);
     } catch (error) {
@@ -246,32 +246,54 @@ const FormularioDuasEtapas = () => {
             </select>
           </div>
 
-          <div className="mb-4">
-            {/* <label className="block text-gray-700">Faturamento Mensal</label> */}
-            <select
-              name="faturamento"
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-              value={formData.faturamento}
-              onChange={handleChange}
-            >
-              <option value="">
-                Quantas placas estão ativas sua base hoje?
-              </option>
-              {[
-                "0 placas",
-                "1 a 200 placas",
-                "201 a 500 placas",
-                "501 a 1000 placas",
-                "1001 a 5000 placas",
-                "Acima de 5000 placas",
-              ].map((item) => (
-                <option key={item} value={item}>
-                  {item}
+          {formData.cargo && formData.cargo !== "Consultor" && (
+            <div className="mb-4">
+              {/* <label className="block text-gray-700">Faturamento Mensal</label> */}
+              <select
+                name="faturamento"
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                value={formData.faturamento}
+                onChange={handleChange}
+              >
+                <option value="">
+                  Quantas placas estão ativas sua base hoje?
                 </option>
-              ))}
-            </select>
-          </div>
+                {[
+                  "0 a 500 placas",
+                  "501 a 1.000 placas",
+                  "1.001 a 2.000 placas",
+                  "2.001 a 5.000 placas",
+                  "5.001 a 10.000 placas",
+                  "Acima de 10.000 placas",
+                ].map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {formData.cargo === "Consultor" && (
+            <div className="mb-4">
+              {/* <label className="block text-gray-700">Faturamento Mensal</label> */}
+              <select
+                name="faturamento"
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                value={formData.faturamento}
+                onChange={handleChange}
+              >
+                <option value="">Quantas adesões você faz por mês?</option>
+                {["De 0 a 30 adesões", "+30 adesões"].map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <button
             type="submit"
