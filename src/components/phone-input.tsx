@@ -1,76 +1,67 @@
 import React from "react";
 import { Input } from "./ui/input";
 
-interface PhoneInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface PhoneInputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  mask: string; // A máscara que você deseja aplicar
+  onChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    rawValue: string
+  ) => void;
+  mask: string;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
   value,
   onChange,
   mask,
-  name, // Certificando-se de que o name é passado corretamente
-  ...inputProps // Espalhando todas as outras props do Input
+  name,
+  ...inputProps
 }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let inputValue = e.target.value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
-    let formattedValue = "";
-
-    // Formata o valor de acordo com a máscara
+  // Função para formatar o valor com a máscara
+  const formatValue = (inputValue: string): { masked: string; raw: string } => {
+    let rawValue = inputValue.replace(/\D/g, ""); // Remove tudo que não é número
+    let maskedValue = "";
     let maskIndex = 0;
-    for (let i = 0; i < inputValue.length && maskIndex < mask.length; i++) {
+
+    for (let i = 0; i < rawValue.length && maskIndex < mask.length; i++) {
       if (mask[maskIndex] === "9") {
-        formattedValue += inputValue[i];
+        maskedValue += rawValue[i];
         maskIndex++;
       } else {
-        formattedValue += mask[maskIndex];
+        maskedValue += mask[maskIndex];
         maskIndex++;
-        i--; // Decrementa i para não pular o próximo número
+        i--; // Mantém o índice do número até encontrar um espaço na máscara
       }
     }
 
-    // Cria um evento customizado para disparar o onChange com o valor apenas numérico
+    return { masked: maskedValue, raw: rawValue };
+  };
+
+  // Handler de mudança de input
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { masked, raw } = formatValue(e.target.value);
+
+    // Criação de um evento customizado para manter compatibilidade
     const customEvent = {
       ...e,
       target: {
         ...e.target,
-        value: inputValue, // Apenas os números (sem máscara)
-        name: name,
+        value: masked, // Exibe o valor formatado no input
+        name,
       },
     };
 
-    onChange(customEvent as React.ChangeEvent<HTMLInputElement>);
-  };
-
-  // Função para formatar o valor com a máscara
-  const applyMask = (inputValue: string): string => {
-    let formattedValue = "";
-    let maskIndex = 0;
-
-    // Formata o valor de acordo com a máscara
-    for (let i = 0; i < inputValue.length && maskIndex < mask.length; i++) {
-      if (mask[maskIndex] === "9") {
-        formattedValue += inputValue[i];
-        maskIndex++;
-      } else {
-        formattedValue += mask[maskIndex];
-        maskIndex++;
-        i--; // Decrementa i para não pular o próximo número
-      }
-    }
-
-    return formattedValue;
+    onChange(customEvent as React.ChangeEvent<HTMLInputElement>, raw);
   };
 
   return (
     <Input
-      name={name} // Passando o name corretamente para o input
+      name={name}
       type="text"
-      value={applyMask(value)} // Exibe o valor com a máscara
+      value={formatValue(value).masked} // Exibe a versão mascarada do valor
       onChange={handleChange}
-      {...inputProps} // Passando todas as props adicionais para o Input
+      {...inputProps}
     />
   );
 };

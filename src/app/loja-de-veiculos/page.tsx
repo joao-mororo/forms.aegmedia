@@ -94,15 +94,6 @@ const FormularioDuasEtapas = () => {
       // Send step 1 data
       try {
         await axios.post(webhook, { ...formData, etapa: "etapa 1" });
-        // if (
-        //   ["Até 50 mil", "De 51 a 70 mil", "De 71 a 100 mil"].includes(
-        //     formData.faturamento
-        //   )
-        // ) {
-        //   redirect("https://lp.aegmedia.com.br/auto-obrigadoref");
-        // } else {
-        //   setStep(2);
-        // }
         setStep(2);
         setIsSending(false);
       } catch (error) {
