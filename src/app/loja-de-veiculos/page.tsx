@@ -70,19 +70,6 @@ const FormularioDuasEtapas = () => {
     e.preventDefault();
     setIsSending(true);
     if (step === 1) {
-      // Validate step 1
-      if (
-        !formData.nome ||
-        !formData.email ||
-        !formData.nome_empresa ||
-        !formData.telefone ||
-        !formData.faturamento
-      ) {
-        alert("Por favor, preencha todos os campos obrigatórios.");
-        setIsSending(false);
-        return;
-      }
-
       // Validate WhatsApp number
       // const wppIsValid = await validateWhatsapp(formData.telefone);
       // if (!wppIsValid) {
@@ -106,13 +93,6 @@ const FormularioDuasEtapas = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSending(true);
-    // Validate step 2
-    if (!formData.cargo || !formData.inicio_projeto) {
-      alert("Por favor, preencha todos os campos obrigatórios.");
-      setIsSending(false);
-      return;
-    }
-
     // Send combined data
     try {
       await axios.post(webhook, { ...formData, etapa: "etapa 2" });
@@ -192,15 +172,6 @@ const FormularioDuasEtapas = () => {
 
           <div className="mb-4">
             {/* <label className="block text-gray-700">Telefone</label> */}
-            {/* <input
-              type="tel"
-              placeholder="DDD + Telefone"
-              value={formData.telefone}
-              onChange={handleChange}
-              name="telefone"
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            /> */}
             <PhoneInput
               mask="(99) 99999-9999"
               type="tel"
@@ -211,6 +182,24 @@ const FormularioDuasEtapas = () => {
               required
               className="mt-1 block w-full border border-gray-300 rounded-md p-2"
             />
+          </div>
+
+          <div className="mb-4">
+            {/* <label className="block text-gray-700">Cargo</label> */}
+            <select
+              name="cargo"
+              required
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              value={formData.cargo}
+              onChange={handleChange}
+            >
+              <option value="">Cargo</option>
+              {["Dono", "Gerente", "Vendedor", "Outro"].map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="mb-4">
@@ -258,23 +247,6 @@ const FormularioDuasEtapas = () => {
             Recebemos o seu cadastro, agora é só terminar de preencher as
             informações para ser atendido com mais agilidade
           </p>
-          <div className="mb-4">
-            {/* <label className="block text-gray-700">Cargo</label> */}
-            <select
-              name="cargo"
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-              value={formData.cargo}
-              onChange={handleChange}
-            >
-              <option value="">Cargo</option>
-              {["Dono", "Gerente", "Vendedor", "Outro"].map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
 
           <div className="mb-4">
             {/* <label className="block text-gray-700">
