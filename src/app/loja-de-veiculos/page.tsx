@@ -70,14 +70,6 @@ const FormularioDuasEtapas = () => {
     e.preventDefault();
     setIsSending(true);
     if (step === 1) {
-      // Validate WhatsApp number
-      // const wppIsValid = await validateWhatsapp(formData.telefone);
-      // if (!wppIsValid) {
-      //   alert("O número do WhatsApp informado é inválido.");
-      //   setIsSending(false);
-      //   return;
-      // }
-
       // Send step 1 data
       try {
         await axios.post(webhook, { ...formData, etapa: "etapa 1" });
@@ -95,7 +87,7 @@ const FormularioDuasEtapas = () => {
     setIsSending(true);
     // Send combined data
     try {
-      await axios.post(webhook, { ...formData, etapa: "etapa 2" });
+      await axios.post(webhook, { ...formData, etapa: "etapa 1" });
       if (formData.cargo === "Dono") {
         redirect("https://lp.aegmedia.com.br/auto-obrigado");
       } else {
@@ -113,7 +105,7 @@ const FormularioDuasEtapas = () => {
       {step === 1 && (
         <form
           id="formStep1"
-          onSubmit={handleNextStep}
+          onSubmit={handleSubmit}
           className="py-[35px] px-[20px] flex flex-col gap-1 min-w-full"
         >
           <input type="hidden" name="utm_source" value={formData.utm_source} />
@@ -213,8 +205,8 @@ const FormularioDuasEtapas = () => {
             >
               <option value="">Quantos veículos você vende por mês?</option>
               {[
-                "1 a 5 carros por mês",
-                "6 a 10 carros por mês",
+                "1 a 4 carros por mês",
+                "5 a 10 carros por mês",
                 "11 a 20 carros por mês",
                 "21 a 30 carros por mês",
                 "31 a 50 carros por mês",
