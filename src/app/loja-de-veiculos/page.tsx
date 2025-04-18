@@ -88,7 +88,7 @@ const FormularioDuasEtapas = () => {
     // Send combined data
     try {
       await axios.post(webhook, { ...formData, etapa: "etapa 1" });
-      if (formData.cargo === "Dono") {
+      if (formData.cargo === "Dono" || formData.cargo === "Gerente") {
         redirect("https://lp.aegmedia.com.br/auto-obrigado");
       } else {
         redirect("https://lp.aegmedia.com.br/auto-obrigadoref");
