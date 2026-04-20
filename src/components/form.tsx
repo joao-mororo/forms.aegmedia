@@ -22,7 +22,7 @@ import axios from "axios";
 import PhoneInput from "./phone-input";
 
 const Form = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step > 1 ? step - 1 : step);
   const [isSending, setIsSending] = useState(false);
@@ -167,6 +167,7 @@ const Form = () => {
           </Label>
           <Select
             required
+            value={data.authority || undefined}
             onValueChange={(value) =>
               handleChange({ name: "authority", value })
             }
@@ -192,6 +193,7 @@ const Form = () => {
           </Label>
           <Select
             required
+            value={data.segment || undefined}
             onValueChange={(value) => handleChange({ name: "segment", value })}
           >
             <SelectTrigger className="text-lg">
@@ -215,6 +217,7 @@ const Form = () => {
           </Label>
           <Select
             required
+            value={data.budget || undefined}
             onValueChange={(value) => handleChange({ name: "budget", value })}
           >
             <SelectTrigger className="text-lg">

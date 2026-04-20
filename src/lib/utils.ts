@@ -1,5 +1,28 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { DEFAULT_AUTHORITIES, DEFAULT_BUDGETS, DEFAULT_SEGMENTS } from "./constants";
+
+function normalizeString(str: string): string {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .replace(/[-_]/g, " ") // troca traços e underscores por espaço
+    .toLowerCase()
+    .trim();
+}
+
+function findBestMatch(inputValue: string | null, options: string[]): string {
+  if (!inputValue) return "";
+  const normalizedInput = normalizeString(inputValue);
+  
+  for (const option of options) {
+    if (normalizeString(option) === normalizedInput) {
+      return option; // Retorna exatamente como cadastrado no sistema
+    }
+  }
+  return inputValue || ""; // Fallback
+}
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -36,13 +59,20 @@ export function getUTMParams() {
       return new URL(window.location.href); // URL da página atual
     })();
 
-    // Extrai os parâmetros UTM
+    // Extrai os parâmetros UTM e todos os campos do formulário solicitados
     const utmParams = {
       utm_source: currentUrl.searchParams.get("utm_source") || "",
       utm_medium: currentUrl.searchParams.get("utm_medium") || "",
       utm_campaign: currentUrl.searchParams.get("utm_campaign") || "",
       utm_term: currentUrl.searchParams.get("utm_term") || "",
       utm_content: currentUrl.searchParams.get("utm_content") || "",
+      name: currentUrl.searchParams.get("name") || "",
+      phone: currentUrl.searchParams.get("phone") || "",
+      email: currentUrl.searchParams.get("email") || "",
+      businessName: currentUrl.searchParams.get("businessName") || "",
+      authority: findBestMatch(currentUrl.searchParams.get("authority"), DEFAULT_AUTHORITIES),
+      segment: findBestMatch(currentUrl.searchParams.get("segment"), DEFAULT_SEGMENTS),
+      budget: findBestMatch(currentUrl.searchParams.get("budget"), DEFAULT_BUDGETS),
     };
     console.log(utmParams);
 
@@ -55,6 +85,13 @@ export function getUTMParams() {
       utm_campaign: "",
       utm_term: "",
       utm_content: "",
+      name: "",
+      phone: "",
+      email: "",
+      businessName: "",
+      authority: "",
+      segment: "",
+      budget: "",
     };
   }
 }

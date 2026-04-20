@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { Quote } from "lucide-react";
 import Form from "@/components/form";
+import QuoteCarousel from "@/components/quote-carousel";
+import SocialProof from "@/components/social-proof";
 
 // Talvez eu traga flores da próxima vez;
 // Ou, com alguma esperança, eu não venha;
@@ -16,13 +17,7 @@ export default function Home() {
           Veja abaixo as empresas que contaram com <br /> a ajuda da AEG Media
           para alavancar suas vendas
         </p>
-        <Image
-          className="bg-transparent"
-          src={"/logos-clientes-lp.webp"}
-          alt="next image"
-          width={"300"}
-          height={"300"}
-        />
+        <SocialProof />
       </div>
       <div className="col-span-7 p-8 sm:col-span-4 flex flex-col items-center justify-between sm:py-7 sm:px-16">
         <header>
@@ -40,18 +35,7 @@ export default function Home() {
           </div>
 
           {/* Citação */}
-          <div className="rounded-xl shadow-md">
-            <div className="flex flex-col items-center sm:flex-row p-4 gap-3 text-lg">
-              <Quote className="text-cyan-500" size={24} />
-              <p className="opacity-50 font-bold">
-                Esse mês foi nosso melhor resultado com o time interno em toda a
-                história da Lidere
-              </p>
-            </div>
-            <p className="bg-cyan-100 text-cyan-600 p-2 pl-4">
-              Reinaldo, Lidere PV
-            </p>
-          </div>
+          <QuoteCarousel />
         </div>
         <div>
           <p>© Copyright {new Date().getFullYear()} AEG Media</p>
