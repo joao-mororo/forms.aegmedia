@@ -17,16 +17,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { getUTMParams, redirect } from "@/lib/utils";
+import { getUTMParams } from "@/lib/utils";
 import axios from "axios";
 import PhoneInput from "./phone-input";
 
+import { useRouter } from "next/navigation";
+
 const Form = () => {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step > 1 ? step - 1 : step);
   const [isSending, setIsSending] = useState(false);
-  const webhook = "https://hook.us1.make.com/2t1mjuhb8hc58b4456o2o2a8k3pzqxbb";
+  const webhook = "https://n8n.aegmedia.com.br/webhook/forms.aegmedia";
   const [data, setData] = useState({
     utm_source: "",
     utm_medium: "",
@@ -57,11 +60,7 @@ const Form = () => {
         .post(webhook, data)
         .then((res) => {
           setIsSending(false);
-          redirect(
-            data.authority === "Proprietário"
-              ? "https://lp.aegmedia.com.br/conv-obrigado"
-              : "https://lp.aegmedia.com.br/conv-obrigadoref"
-          );
+          router.push("/typ");
         })
         .catch((err) => {
           console.error(err);
