@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { DEFAULT_AUTHORITIES, DEFAULT_BUDGETS, DEFAULT_SEGMENTS } from "./constants";
+import { DEFAULT_AUTHORITIES, DEFAULT_BUDGETS, DEFAULT_SEGMENTS, DEFAULT_VEHICLE_AMOUNTS } from "./constants";
 
 function normalizeString(str: string): string {
   if (!str) return "";
@@ -73,6 +73,8 @@ export function getUTMParams() {
       authority: findBestMatch(currentUrl.searchParams.get("authority"), DEFAULT_AUTHORITIES),
       segment: findBestMatch(currentUrl.searchParams.get("segment"), DEFAULT_SEGMENTS),
       budget: findBestMatch(currentUrl.searchParams.get("budget"), DEFAULT_BUDGETS),
+      sales: findBestMatch(currentUrl.searchParams.get("sales"), DEFAULT_VEHICLE_AMOUNTS),
+      stock: findBestMatch(currentUrl.searchParams.get("stock"), DEFAULT_VEHICLE_AMOUNTS),
     };
     console.log(utmParams);
 
@@ -92,6 +94,8 @@ export function getUTMParams() {
       authority: "",
       segment: "",
       budget: "",
+      sales: "",
+      stock: "",
     };
   }
 }

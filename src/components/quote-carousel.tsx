@@ -10,11 +10,11 @@ const quotes = [
   },
   {
     text: "A gente usa, a gente sabe que funciona, na nossa operação, está indo muito bem.",
-    author: "Bello, BellosCar"
+    author: "Rodrigo Bello, BellosCar"
   },
   {
     text: "É surreal a forma como você vai multiplicar suas vendas e aumentar o faturamento.",
-    author: "Edylton, Petrolina Seminovos"
+    author: "Elton, Petrolina Seminovos"
   }
 ];
 

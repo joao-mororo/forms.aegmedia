@@ -38,3 +38,11 @@ export const DEFAULT_BUDGETS = [
   "De 16 a 40 milhões",
   "Mais de 40 milhões",
 ];
+
+export const DEFAULT_VEHICLE_AMOUNTS = [
+  "1 a 5 veículos",
+  "6 a 10 veículos",
+  "11 a 20 veículos",
+  "21 a 30 veículos",
+  "Acima de 30 veículos",
+];

@@ -9,6 +9,7 @@ import {
   DEFAULT_AUTHORITIES,
   DEFAULT_BUDGETS,
   DEFAULT_SEGMENTS,
+  DEFAULT_VEHICLE_AMOUNTS,
 } from "@/lib/constants";
 import {
   Select,
@@ -26,8 +27,20 @@ import { useRouter } from "next/navigation";
 const Form = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step > 1 ? step - 1 : step);
+  const nextStep = () => {
+    if (step === 6 && data.segment === "Loja de veículos") {
+      setStep(8);
+    } else {
+      setStep(step + 1);
+    }
+  };
+  const prevStep = () => {
+    if (step === 8 && data.segment === "Loja de veículos") {
+      setStep(6);
+    } else {
+      setStep(step > 1 ? step - 1 : step);
+    }
+  };
   const [isSending, setIsSending] = useState(false);
   const webhook = "https://n8n.aegmedia.com.br/webhook/forms.aegmedia";
   const [data, setData] = useState({
@@ -43,6 +56,8 @@ const Form = () => {
     authority: "",
     segment: "",
     budget: "",
+    sales: "",
+    stock: "",
   });
 
   const handleChange = (e: any) => {
@@ -52,7 +67,9 @@ const Form = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (step < 7) {
+    const isVehicleStore = data.segment === "Loja de veículos";
+    const maxSteps = isVehicleStore ? 9 : 7;
+    if (step < maxSteps) {
       nextStep();
     } else {
       setIsSending(true);
@@ -224,6 +241,54 @@ const Form = () => {
             </SelectTrigger>
             <SelectContent className="text-lg">
               {DEFAULT_BUDGETS.map((item) => (
+                <SelectItem key={item} value={item}>
+                  {item}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {step === 8 && (
+        <div className="flex flex-col gap-8">
+          <Label className="text-xl sm:text-3xl font-bold">
+            Quantos veículos você vende em média por mês?
+          </Label>
+          <Select
+            required
+            value={data.sales || undefined}
+            onValueChange={(value) => handleChange({ name: "sales", value })}
+          >
+            <SelectTrigger className="text-lg">
+              <SelectValue placeholder="Selecione a quantidade de vendas" />
+            </SelectTrigger>
+            <SelectContent className="text-lg">
+              {DEFAULT_VEHICLE_AMOUNTS.map((item) => (
+                <SelectItem key={item} value={item}>
+                  {item}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {step === 9 && (
+        <div className="flex flex-col gap-8">
+          <Label className="text-xl sm:text-3xl font-bold">
+            Quantos veículos você tem em estoque?
+          </Label>
+          <Select
+            required
+            value={data.stock || undefined}
+            onValueChange={(value) => handleChange({ name: "stock", value })}
+          >
+            <SelectTrigger className="text-lg">
+              <SelectValue placeholder="Selecione a quantidade em estoque" />
+            </SelectTrigger>
+            <SelectContent className="text-lg">
+              {DEFAULT_VEHICLE_AMOUNTS.map((item) => (
                 <SelectItem key={item} value={item}>
                   {item}
                 </SelectItem>
